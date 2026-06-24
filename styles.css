@@ -1,11 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ArtVerse - Premium Paintings & Drawings Gallery</title>
-    <style>
-        * {
+* {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
@@ -41,6 +34,18 @@
             padding: 0 20px;
         }
 
+        a {
+            color: var(--primary-color);
+            text-decoration: none;
+            transition: color 0.3s, text-decoration 0.3s;
+        }
+
+        a:hover,
+        a:focus {
+            color: var(--secondary-color);
+            text-decoration: underline;
+        }
+
         /* Navbar */
         .navbar {
             background-color: var(--white);
@@ -72,6 +77,7 @@
         .logo-svg {
             width: 45px;
             height: 45px;
+            animation: float 3s ease-in-out infinite;
         }
 
         .logo-text {
@@ -841,6 +847,101 @@
             color: var(--text-light);
         }
 
+        .artist-section {
+            padding: 80px 0;
+            background-color: #ffffff;
+        }
+
+        .artist-section .section-heading {
+            text-align: center;
+            margin-bottom: 35px;
+        }
+
+        .artist-section .section-heading h2 {
+            font-size: 38px;
+            margin-bottom: 10px;
+        }
+
+        .artist-section .section-heading .section-subtitle {
+            max-width: 700px;
+            margin: 0 auto;
+            color: var(--text-light);
+            line-height: 1.8;
+            font-size: 16px;
+        }
+
+        .artist-section .artist-info {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .artist-section .artist-info h3 {
+            font-size: 28px;
+            margin-bottom: 8px;
+            color: var(--text-dark);
+        }
+
+        .artist-section .artist-info .medium {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--primary-color);
+        }
+
+        .artist-section .art-gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 24px;
+        }
+
+        .artist-section .art-card {
+            border-radius: 18px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            background-color: var(--white);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .artist-section .art-card img {
+            width: 100%;
+            height: 320px;
+            object-fit: cover;
+            display: block;
+            transition: transform 0.3s ease;
+            min-height: 320px;
+            background-color: #f0f0f0;
+        }
+
+        .artist-section .art-card img:not([src]) {
+            display: block;
+            min-height: 320px;
+            background: radial-gradient(circle at top, rgba(255,255,255,0.8), rgba(240,240,240,0.8));
+        }
+
+        .artist-section .art-card:hover img {
+            transform: scale(1.03);
+        }
+
+        .artist-section .art-card-caption {
+            padding: 18px 20px 24px;
+            text-align: center;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .artist-section .art-card-caption strong {
+            display: block;
+            font-size: 18px;
+            margin-bottom: 6px;
+            color: var(--text-dark);
+        }
+
+        .artist-section .art-card-caption span {
+            display: block;
+            font-size: 14px;
+            color: var(--primary-color);
+            letter-spacing: 0.04em;
+        }
+
         /* Modal */
         .modal {
             display: none;
@@ -1214,987 +1315,3 @@
         section {
             scroll-margin-top: 80px;
         }
-    </style>
-</head>
-<body>
-    <!-- Navigation -->
-    <nav class="navbar">
-        <div class="container">
-            <div class="navbar-content">
-                <div class="logo-container">
-                    <svg class="logo-svg" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-                        <ellipse cx="50" cy="60" rx="35" ry="25" fill="#f0e6d2" stroke="#8b4513" stroke-width="2"/>
-                        <circle cx="30" cy="50" r="5" fill="#ff6b6b"/>
-                        <circle cx="45" cy="45" r="5" fill="#4ecdc4"/>
-                        <circle cx="60" cy="45" r="5" fill="#ffe66d"/>
-                        <circle cx="70" cy="55" r="5" fill="#95e1d3"/>
-                        <circle cx="35" cy="65" r="5" fill="#a29bfe"/>
-                        <circle cx="65" cy="65" r="5" fill="#fd79a8"/>
-                        <rect x="48" y="15" width="4" height="35" fill="#8b4513"/>
-                        <circle cx="50" cy="18" r="6" fill="#d4a574"/>
-                        <rect x="10" y="20" width="25" height="30" fill="none" stroke="#8b4513" stroke-width="2"/>
-                        <rect x="12" y="22" width="21" height="26" fill="rgba(255,107,107,0.1)"/>
-                        <line x1="15" y1="30" x2="25" y2="35" stroke="#ff6b6b" stroke-width="1.5"/>
-                        <line x1="14" y1="40" x2="28" y2="42" stroke="#4ecdc4" stroke-width="1.5"/>
-                    </svg>
-                    <span class="logo-text">ArtVerse</span>
-                </div>
-                <ul class="nav-links">
-                    <li><a href="#home" class="nav-link">Home</a></li>
-                    <li><a href="#gallery" class="nav-link">Gallery</a></li>
-                    <li><a href="#artists" class="nav-link">Artists</a></li>
-                    <li><a href="#exhibitions" class="nav-link">Exhibitions</a></li>
-                    <li><a href="#contact" class="nav-link">Contact</a></li>
-                </ul>
-                <div class="nav-icons">
-                    <button id="search-btn" class="icon-btn">🔍</button>
-                    <button id="favorites-btn" class="icon-btn">❤️<span class="badge">0</span></button>
-                    <button id="cart-btn" class="icon-btn">🛒<span class="badge">0</span></button>
-                </div>
-            </div>
-        </div>
-    </nav>
-
-    <!-- Search Bar -->
-    <div class="search-bar" id="search-bar">
-        <div class="container">
-            <input type="text" id="search-input" placeholder="Search artworks, artists...">
-            <button id="search-close">✕</button>
-        </div>
-    </div>
-
-    <!-- Hero Section -->
-    <section class="hero" id="home">
-        <div class="hero-content">
-            <h1>Discover Exceptional Art</h1>
-            <p>Explore curated collections of original paintings and drawings from talented artists around the world</p>
-            <a href="#gallery" class="btn btn-primary">Explore Gallery</a>
-        </div>
-        <div class="hero-image">
-            <svg viewBox="0 0 400 350" xmlns="http://www.w3.org/2000/svg">
-                <rect x="50" y="40" width="300" height="250" fill="#ffffff" stroke="#d4a574" stroke-width="8" rx="10"/>
-                <defs>
-                    <linearGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="100%">
-                        <stop offset="0%" style="stop-color:#ff6b6b;stop-opacity:1" />
-                        <stop offset="100%" style="stop-color:#fd79a8;stop-opacity:1" />
-                    </linearGradient>
-                    <linearGradient id="grad2" x1="0%" y1="0%" x2="100%" y2="100%">
-                        <stop offset="0%" style="stop-color:#4ecdc4;stop-opacity:1" />
-                        <stop offset="100%" style="stop-color:#44a08d;stop-opacity:1" />
-                    </linearGradient>
-                </defs>
-                <circle cx="120" cy="100" r="40" fill="url(#grad1)" opacity="0.7"/>
-                <circle cx="280" cy="140" r="50" fill="url(#grad2)" opacity="0.7"/>
-                <path d="M 100 250 Q 150 200 200 220 T 300 250" stroke="#a29bfe" stroke-width="3" fill="none" opacity="0.8"/>
-                <rect x="70" y="180" width="60" height="40" fill="#ffe66d" opacity="0.6" transform="rotate(20 100 200)"/>
-                <ellipse cx="330" cy="270" rx="15" ry="12" fill="#f0e6d2" stroke="#8b4513" stroke-width="1"/>
-                <circle cx="320" cy="268" r="2" fill="#ff6b6b"/>
-                <circle cx="330" cy="263" r="2" fill="#4ecdc4"/>
-                <circle cx="340" cy="268" r="2" fill="#ffe66d"/>
-            </svg>
-        </div>
-    </section>
-
-    <!-- Featured Artworks -->
-    <section class="featured">
-        <div class="container">
-            <h2>Featured Artworks</h2>
-            <div class="featured-grid" id="featured-grid">
-            </div>
-        </div>
-    </section>
-
-    <!-- Categories -->
-    <section class="categories">
-        <div class="container">
-            <h2>Browse by Category</h2>
-            <div class="category-grid">
-                <div class="category-card" data-category="oil">
-                    <div class="category-icon">🎨</div>
-                    <h3>Oil Paintings</h3>
-                    <p>Classic and contemporary oil artworks</p>
-                </div>
-                <div class="category-card" data-category="watercolor">
-                    <div class="category-icon">💧</div>
-                    <h3>Watercolor</h3>
-                    <p>Delicate and flowing watercolor pieces</p>
-                </div>
-                <div class="category-card" data-category="sketches">
-                    <div class="category-icon">✏️</div>
-                    <h3>Sketches</h3>
-                    <p>Pencil and charcoal sketches</p>
-                </div>
-                <div class="category-card" data-category="digital">
-                    <div class="category-icon">💻</div>
-                    <h3>Digital Art</h3>
-                    <p>Modern digital creations</p>
-                </div>
-                <div class="category-card" data-category="acrylic">
-                    <div class="category-icon">🖌️</div>
-                    <h3>Acrylic</h3>
-                    <p>Vibrant acrylic paintings</p>
-                </div>
-                <div class="category-card" data-category="mixed">
-                    <div class="category-icon">🎭</div>
-                    <h3>Mixed Media</h3>
-                    <p>Experimental mixed media artworks</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Gallery Section -->
-    <section class="gallery" id="gallery">
-        <div class="container">
-            <div class="gallery-header">
-                <h2>Artwork Gallery</h2>
-                <div class="gallery-filters">
-                    <select id="category-filter">
-                        <option value="">All Categories</option>
-                        <option value="oil">Oil Paintings</option>
-                        <option value="watercolor">Watercolor</option>
-                        <option value="sketches">Sketches</option>
-                        <option value="digital">Digital Art</option>
-                        <option value="acrylic">Acrylic</option>
-                        <option value="mixed">Mixed Media</option>
-                    </select>
-                    <select id="sort-filter">
-                        <option value="newest">Newest</option>
-                        <option value="price-low">Price: Low to High</option>
-                        <option value="price-high">Price: High to Low</option>
-                        <option value="popular">Most Popular</option>
-                    </select>
-                </div>
-            </div>
-            <div class="artwork-grid" id="artwork-grid">
-            </div>
-        </div>
-    </section>
-
-    <!-- Artists Section -->
-    <section class="artists" id="artists">
-        <div class="container">
-            <h2>Featured Artists</h2>
-            <div class="artists-grid" id="artists-grid">
-            </div>
-        </div>
-    </section>
-
-    <!-- Exhibitions Section -->
-    <section class="exhibitions" id="exhibitions">
-        <div class="container">
-            <h2>Upcoming Exhibitions</h2>
-            <div class="exhibitions-grid">
-                <div class="exhibition-card">
-                    <div class="exhibition-image">
-                        <img src="https://via.placeholder.com/400x250?text=Spring+Exhibition" alt="Spring Exhibition">
-                    </div>
-                    <div class="exhibition-info">
-                        <h3>Spring Collection 2024</h3>
-                        <p class="exhibition-date">📅 March 15 - April 30, 2024</p>
-                        <p class="exhibition-location">📍 Central Art Gallery, New York</p>
-                        <p>Celebrate the season with vibrant artworks featuring spring themes and contemporary expressions.</p>
-                        <a href="#" class="btn btn-secondary">Learn More</a>
-                    </div>
-                </div>
-                <div class="exhibition-card">
-                    <div class="exhibition-image">
-                        <img src="https://via.placeholder.com/400x250?text=Summer+Exhibition" alt="Summer Exhibition">
-                    </div>
-                    <div class="exhibition-info">
-                        <h3>Summer Modern Art Show</h3>
-                        <p class="exhibition-date">📅 June 1 - July 31, 2024</p>
-                        <p class="exhibition-location">📍 International Art Center, London</p>
-                        <p>Experience cutting-edge modern art from emerging and established artists worldwide.</p>
-                        <a href="#" class="btn btn-secondary">Learn More</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- About Section -->
-    <section class="about">
-        <div class="container">
-            <div class="about-content">
-                <div class="about-text">
-                    <h2>About ArtVerse</h2>
-                    <p>ArtVerse is a premier online platform dedicated to showcasing exceptional paintings and drawings from talented artists around the globe. We believe in making fine art accessible to everyone.</p>
-                    <ul class="about-features">
-                        <li><span class="icon">✓</span> Curated Collection of Original Artworks</li>
-                        <li><span class="icon">✓</span> Direct Support for Independent Artists</li>
-                        <li><span class="icon">✓</span> Certificate of Authenticity</li>
-                        <li><span class="icon">✓</span> Secure Shipping & Handling</li>
-                        <li><span class="icon">✓</span> Professional Art Consultation</li>
-                        <li><span class="icon">✓</span> Limited Edition Prints Available</li>
-                    </ul>
-                </div>
-                <div class="about-image">
-                    <img src="https://via.placeholder.com/400x300?text=ArtVerse+Studio" alt="About ArtVerse">
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Contact Section -->
-    <section class="contact" id="contact">
-        <div class="container">
-            <h2>Get In Touch</h2>
-            <div class="contact-content">
-                <form class="contact-form" id="contact-form">
-                    <input type="text" placeholder="Your Name" required>
-                    <input type="email" placeholder="Your Email" required>
-                    <select required>
-                        <option value="">Select Inquiry Type</option>
-                        <option value="commission">Art Commission</option>
-                        <option value="purchase">Purchase Inquiry</option>
-                        <option value="collaboration">Artist Collaboration</option>
-                        <option value="other">Other</option>
-                    </select>
-                    <textarea placeholder="Your Message" rows="5" required></textarea>
-                    <button type="submit" class="btn btn-primary">Send Message</button>
-                </form>
-                <div class="contact-info">
-                    <div class="info-item">
-                        <div class="info-icon">📍</div>
-                        <div>
-                            <h4>Address</h4>
-                            <p>123 Arts Avenue, Creative District, NY 10001</p>
-                        </div>
-                    </div>
-                    <div class="info-item">
-                        <div class="info-icon">📞</div>
-                        <div>
-                            <h4>Phone</h4>
-                            <p>+1 (555) 123-4567</p>
-                        </div>
-                    </div>
-                    <div class="info-item">
-                        <div class="info-icon">✉️</div>
-                        <div>
-                            <h4>Email</h4>
-                            <p>hello@artverse.com</p>
-                        </div>
-                    </div>
-                    <div class="info-item">
-                        <div class="info-icon">🕐</div>
-                        <div>
-                            <h4>Hours</h4>
-                            <p>Mon - Sun: 10:00 AM - 6:00 PM</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Art Modal -->
-    <div class="modal" id="art-modal">
-        <div class="modal-content art-modal-content">
-            <button class="close-btn">✕</button>
-            <div class="art-detail-content">
-                <div class="detail-image">
-                    <img id="detail-image" src="" alt="">
-                </div>
-                <div class="detail-info">
-                    <h2 id="detail-title"></h2>
-                    <p class="detail-artist"><strong>Artist:</strong> <span id="detail-artist"></span></p>
-                    <div class="detail-meta">
-                        <span><strong>Year:</strong> <span id="detail-year"></span></span>
-                        <span><strong>Medium:</strong> <span id="detail-medium"></span></span>
-                        <span><strong>Dimensions:</strong> <span id="detail-dimensions"></span></span>
-                    </div>
-                    <p class="detail-price" id="detail-price"></p>
-                    <p id="detail-description" class="detail-description"></p>
-                    <div class="detail-actions">
-                        <button class="btn btn-primary" id="add-to-cart-btn">Add to Cart</button>
-                        <button class="btn btn-secondary" id="add-to-favorites-btn">❤️ Favorites</button>
-                    </div>
-                    <div class="detail-options">
-                        <h4>Purchasing Options:</h4>
-                        <div class="options-list">
-                            <label class="option-label">
-                                <input type="radio" name="art-option" value="original" checked>
-                                <span>Original Artwork</span>
-                            </label>
-                            <label class="option-label">
-                                <input type="radio" name="art-option" value="print">
-                                <span>Limited Edition Print</span>
-                            </label>
-                            <label class="option-label">
-                                <input type="radio" name="art-option" value="canvas">
-                                <span>Canvas Print</span>
-                            </label>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Cart Modal -->
-    <div class="modal" id="cart-modal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h2>Shopping Cart</h2>
-                <button class="close-btn">✕</button>
-            </div>
-            <div class="cart-items" id="cart-items">
-            </div>
-            <div class="cart-summary">
-                <div class="summary-row">
-                    <span>Subtotal:</span>
-                    <span id="subtotal">$0.00</span>
-                </div>
-                <div class="summary-row">
-                    <span>Shipping:</span>
-                    <span id="shipping">$0.00</span>
-                </div>
-                <div class="summary-row total">
-                    <span>Total:</span>
-                    <span id="total">$0.00</span>
-                </div>
-                <button class="btn btn-primary btn-block">Proceed to Checkout</button>
-            </div>
-        </div>
-    </div>
-
-    <!-- Footer -->
-    <footer class="footer">
-        <div class="container">
-            <div class="footer-content">
-                <div class="footer-section">
-                    <h4>About</h4>
-                    <ul>
-                        <li><a href="#">Our Story</a></li>
-                        <li><a href="#">Our Team</a></li>
-                        <li><a href="#">Careers</a></li>
-                        <li><a href="#">Press</a></li>
-                    </ul>
-                </div>
-                <div class="footer-section">
-                    <h4>Support</h4>
-                    <ul>
-                        <li><a href="#">Contact Us</a></li>
-                        <li><a href="#">FAQ</a></li>
-                        <li><a href="#">Shipping Info</a></li>
-                        <li><a href="#">Returns</a></li>
-                    </ul>
-                </div>
-                <div class="footer-section">
-                    <h4>Policies</h4>
-                    <ul>
-                        <li><a href="#">Privacy Policy</a></li>
-                        <li><a href="#">Terms of Service</a></li>
-                        <li><a href="#">Cookie Policy</a></li>
-                        <li><a href="#">Accessibility</a></li>
-                    </ul>
-                </div>
-                <div class="footer-section">
-                    <h4>Follow Us</h4>
-                    <div class="social-links">
-                        <a href="#">f</a>
-                        <a href="#">𝕏</a>
-                        <a href="#">📷</a>
-                        <a href="#">📌</a>
-                    </div>
-                </div>
-            </div>
-            <div class="footer-bottom">
-                <p>&copy; 2024 ArtVerse. All rights reserved. Celebrating artists worldwide.</p>
-            </div>
-        </div>
-    </footer>
-
-    <script>
-        // Artwork Database
-        const artworks = [
-            {
-                id: 1,
-                title: "Sunset Over Mountains",
-                artist: "Sarah Mitchell",
-                category: "oil",
-                year: 2023,
-                medium: "Oil on Canvas",
-                dimensions: "80x60 cm",
-                price: 2500,
-                image: "https://via.placeholder.com/400x350?text=Sunset+Mountains",
-                description: "A breathtaking landscape capturing the golden hour over majestic mountain peaks.",
-                popularity: 95
-            },
-            {
-                id: 2,
-                title: "Ocean Waves",
-                artist: "James Chen",
-                category: "watercolor",
-                year: 2024,
-                medium: "Watercolor",
-                dimensions: "70x50 cm",
-                price: 1800,
-                image: "https://via.placeholder.com/400x350?text=Ocean+Waves",
-                description: "A serene watercolor depicting the peaceful rhythm of ocean waves at dawn.",
-                popularity: 88
-            },
-            {
-                id: 3,
-                title: "Urban Sketches",
-                artist: "Elena Rodriguez",
-                category: "sketches",
-                year: 2023,
-                medium: "Graphite Pencil",
-                dimensions: "40x50 cm",
-                price: 450,
-                image: "https://via.placeholder.com/400x350?text=Urban+Sketches",
-                description: "A series of urban architectural studies drawn in fine graphite pencil.",
-                popularity: 72
-            },
-            {
-                id: 4,
-                title: "Digital Dreams",
-                artist: "Marcus Lee",
-                category: "digital",
-                year: 2024,
-                medium: "Digital",
-                dimensions: "100x75 cm",
-                price: 1200,
-                image: "https://via.placeholder.com/400x350?text=Digital+Dreams",
-                description: "An imaginative digital artwork blending surrealism with modern aesthetics.",
-                popularity: 85
-            },
-            {
-                id: 5,
-                title: "Vibrant Abstraction",
-                artist: "Sofia Larsson",
-                category: "acrylic",
-                year: 2023,
-                medium: "Acrylic on Canvas",
-                dimensions: "90x90 cm",
-                price: 3200,
-                image: "https://via.placeholder.com/400x350?text=Vibrant+Abstraction",
-                description: "Bold and expressive abstract work using vibrant acrylic colors.",
-                popularity: 92
-            },
-            {
-                id: 6,
-                title: "Mixed Textures",
-                artist: "David Park",
-                category: "mixed",
-                year: 2024,
-                medium: "Mixed Media",
-                dimensions: "60x80 cm",
-                price: 1950,
-                image: "https://via.placeholder.com/400x350?text=Mixed+Textures",
-                description: "An experimental mixed media piece combining various materials and techniques.",
-                popularity: 78
-            },
-            {
-                id: 7,
-                title: "Portrait of Grace",
-                artist: "Isabella Romano",
-                category: "oil",
-                year: 2023,
-                medium: "Oil on Canvas",
-                dimensions: "70x85 cm",
-                price: 3500,
-                image: "https://via.placeholder.com/400x350?text=Portrait+Grace",
-                description: "An elegant portrait capturing the essence of grace and elegance.",
-                popularity: 90
-            },
-            {
-                id: 8,
-                title: "Floral Garden",
-                artist: "Maya Patel",
-                category: "watercolor",
-                year: 2024,
-                medium: "Watercolor",
-                dimensions: "55x75 cm",
-                price: 1500,
-                image: "https://via.placeholder.com/400x350?text=Floral+Garden",
-                description: "A delicate watercolor garden filled with blooming flowers and soft colors.",
-                popularity: 80
-            },
-            {
-                id: 9,
-                title: "Detailed Landscape",
-                artist: "Thomas Anderson",
-                category: "sketches",
-                year: 2023,
-                medium: "Charcoal",
-                dimensions: "65x90 cm",
-                price: 800,
-                image: "https://via.placeholder.com/400x350?text=Landscape+Detail",
-                description: "A highly detailed landscape sketch rendered in charcoal.",
-                popularity: 75
-            },
-            {
-                id: 10,
-                title: "Neon City",
-                artist: "Alex Zhang",
-                category: "digital",
-                year: 2024,
-                medium: "Digital",
-                dimensions: "120x80 cm",
-                price: 1600,
-                image: "https://via.placeholder.com/400x350?text=Neon+City",
-                description: "A futuristic cityscape rendered in vibrant neon colors.",
-                popularity: 87
-            },
-            {
-                id: 11,
-                title: "Abstract Emotion",
-                artist: "Lucia Moretti",
-                category: "acrylic",
-                year: 2023,
-                medium: "Acrylic on Canvas",
-                dimensions: "100x70 cm",
-                price: 2800,
-                image: "https://via.placeholder.com/400x350?text=Abstract+Emotion",
-                description: "An emotional abstract piece expressing inner feelings through color and form.",
-                popularity: 86
-            },
-            {
-                id: 12,
-                title: "Harmony",
-                artist: "Benjamin Woods",
-                category: "mixed",
-                year: 2024,
-                medium: "Mixed Media",
-                dimensions: "80x60 cm",
-                price: 2100,
-                image: "https://via.placeholder.com/400x350?text=Harmony",
-                description: "A harmonious mixed media composition exploring balance and unity.",
-                popularity: 82
-            }
-        ];
-
-        // Artists Database
-        const artists = [
-            {
-                id: 1,
-                name: "Sarah Mitchell",
-                specialty: "Oil Paintings",
-                image: "https://via.placeholder.com/400x300?text=Sarah+Mitchell",
-                description: "Award-winning oil painter specializing in landscapes and natural light."
-            },
-            {
-                id: 2,
-                name: "James Chen",
-                specialty: "Watercolor Art",
-                image: "https://via.placeholder.com/400x300?text=James+Chen",
-                description: "Contemporary watercolor artist creating serene and expressive works."
-            },
-            {
-                id: 3,
-                name: "Elena Rodriguez",
-                specialty: "Sketches & Drawings",
-                image: "https://via.placeholder.com/400x300?text=Elena+Rodriguez",
-                description: "Master draughtsman known for detailed architectural and figure studies."
-            },
-            {
-                id: 4,
-                name: "Marcus Lee",
-                specialty: "Digital Art",
-                image: "https://via.placeholder.com/400x300?text=Marcus+Lee",
-                description: "Innovative digital artist pushing the boundaries of modern art."
-            },
-            {
-                id: 5,
-                name: "Sofia Larsson",
-                specialty: "Abstract & Acrylic",
-                image: "https://via.placeholder.com/400x300?text=Sofia+Larsson",
-                description: "Bold abstract artist exploring color theory and emotional expression."
-            },
-            {
-                id: 6,
-                name: "David Park",
-                specialty: "Mixed Media",
-                image: "https://via.placeholder.com/400x300?text=David+Park",
-                description: "Experimental artist combining traditional and contemporary techniques."
-            }
-        ];
-
-        // State Management
-        let cart = [];
-        let favorites = [];
-        let currentArtwork = null;
-
-        // Initialize
-        document.addEventListener('DOMContentLoaded', () => {
-            loadFromLocalStorage();
-            renderFeatured();
-            renderArtworks(artworks);
-            renderArtists();
-            setupEventListeners();
-            updateBadges();
-        });
-
-        // Setup Event Listeners
-        function setupEventListeners() {
-            // Search
-            document.getElementById('search-btn').addEventListener('click', (e) => {
-                e.preventDefault();
-                document.getElementById('search-bar').classList.toggle('active');
-            });
-
-            document.getElementById('search-close').addEventListener('click', () => {
-                document.getElementById('search-bar').classList.remove('active');
-            });
-
-            document.getElementById('search-input').addEventListener('input', (e) => {
-                const query = e.target.value.toLowerCase();
-                const filtered = artworks.filter(a => 
-                    a.title.toLowerCase().includes(query) ||
-                    a.artist.toLowerCase().includes(query) ||
-                    a.medium.toLowerCase().includes(query)
-                );
-                renderArtworks(filtered);
-            });
-
-            // Filters
-            document.getElementById('category-filter').addEventListener('change', applyFilters);
-            document.getElementById('sort-filter').addEventListener('change', applyFilters);
-
-            // Cart
-            document.getElementById('cart-btn').addEventListener('click', (e) => {
-                e.preventDefault();
-                openCartModal();
-            });
-
-            // Favorites
-            document.getElementById('favorites-btn').addEventListener('click', (e) => {
-                e.preventDefault();
-                const favorited = artworks.filter(a => favorites.includes(a.id));
-                renderArtworks(favorited);
-                document.getElementById('search-bar').classList.remove('active');
-            });
-
-            // Category Cards
-            document.querySelectorAll('.category-card').forEach(card => {
-                card.addEventListener('click', () => {
-                    const category = card.dataset.category;
-                    document.getElementById('category-filter').value = category;
-                    applyFilters();
-                    document.querySelector('.gallery').scrollIntoView({ behavior: 'smooth' });
-                });
-            });
-
-            // Contact Form
-            document.getElementById('contact-form').addEventListener('submit', (e) => {
-                e.preventDefault();
-                alert('Thank you for your message! We will get back to you soon.');
-                e.target.reset();
-            });
-
-            // Modal Close Buttons
-            document.querySelectorAll('.close-btn').forEach(btn => {
-                btn.addEventListener('click', (e) => {
-                    e.target.closest('.modal').classList.remove('active');
-                });
-            });
-
-            // Modal Background Click
-            document.querySelectorAll('.modal').forEach(modal => {
-                modal.addEventListener('click', (e) => {
-                    if (e.target === modal) {
-                        modal.classList.remove('active');
-                    }
-                });
-            });
-
-            // Product Modal Actions
-            document.getElementById('add-to-cart-btn').addEventListener('click', addToCart);
-            document.getElementById('add-to-favorites-btn').addEventListener('click', toggleFavorite);
-        }
-
-        // Render Featured Artworks
-        function renderFeatured() {
-            const grid = document.getElementById('featured-grid');
-            const featured = artworks.slice(0, 3);
-
-            grid.innerHTML = featured.map(artwork => `
-                <div class="featured-card" data-id="${artwork.id}">
-                    <img src="${artwork.image}" alt="${artwork.title}" class="featured-image">
-                    <div class="featured-info">
-                        <h3 class="featured-title">${artwork.title}</h3>
-                        <p class="featured-artist">by ${artwork.artist}</p>
-                        <p class="featured-price">$${artwork.price.toLocaleString()}</p>
-                    </div>
-                </div>
-            `).join('');
-
-            document.querySelectorAll('.featured-card').forEach(card => {
-                card.addEventListener('click', () => {
-                    const id = parseInt(card.dataset.id);
-                    const artwork = artworks.find(a => a.id === id);
-                    openArtModal(artwork);
-                });
-            });
-        }
-
-        // Render Artworks
-        function renderArtworks(artworksToRender) {
-            const grid = document.getElementById('artwork-grid');
-            grid.innerHTML = '';
-
-            if (artworksToRender.length === 0) {
-                grid.innerHTML = '<p style="grid-column: 1/-1; text-align: center; padding: 40px; color: #7f8c8d;">No artworks found.</p>';
-                return;
-            }
-
-            artworksToRender.forEach(artwork => {
-                const card = document.createElement('div');
-                card.className = 'artwork-card';
-                card.innerHTML = `
-                    <div class="artwork-image" style="background-image: url('${artwork.image}'); background-size: cover;">
-                        <img src="${artwork.image}" alt="${artwork.title}" style="width: 100%; height: 100%; object-fit: cover;">
-                        <div class="artwork-overlay">
-                            <div class="overlay-buttons">
-                                <button class="overlay-btn view-btn" data-id="${artwork.id}">👁️</button>
-                                <button class="overlay-btn favorite-btn ${favorites.includes(artwork.id) ? 'active' : ''}" data-id="${artwork.id}">❤️</button>
-                                <button class="overlay-btn cart-btn" data-id="${artwork.id}">🛒</button>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="artwork-info">
-                        <h3 class="artwork-title">${artwork.title}</h3>
-                        <p class="artwork-artist">${artwork.artist}</p>
-                        <div class="artwork-meta">
-                            <span class="artwork-medium">${artwork.medium}</span>
-                            <span class="artwork-price">$${artwork.price.toLocaleString()}</span>
-                        </div>
-                    </div>
-                `;
-
-                card.querySelector('.view-btn').addEventListener('click', () => openArtModal(artwork));
-                card.querySelector('.favorite-btn').addEventListener('click', (e) => {
-                    e.stopPropagation();
-                    toggleFavoriteArtwork(artwork.id, e.target.closest('button'));
-                });
-                card.querySelector('.cart-btn').addEventListener('click', (e) => {
-                    e.stopPropagation();
-                    addArtworkToCart(artwork);
-                });
-
-                grid.appendChild(card);
-            });
-        }
-
-        // Render Artists
-        function renderArtists() {
-            const grid = document.getElementById('artists-grid');
-
-            grid.innerHTML = artists.map(artist => `
-                <div class="artist-card">
-                    <img src="${artist.image}" alt="${artist.name}" class="artist-image">
-                    <div class="artist-info">
-                        <h3 class="artist-name">${artist.name}</h3>
-                        <p class="artist-specialty">${artist.specialty}</p>
-                        <p class="artist-description">${artist.description}</p>
-                        <div class="artist-social">
-                            <a href="#" title="Instagram">📷</a>
-                            <a href="#" title="Facebook">f</a>
-                            <a href="#" title="Twitter">𝕏</a>
-                        </div>
-                    </div>
-                </div>
-            `).join('');
-        }
-
-        // Apply Filters
-        function applyFilters() {
-            const category = document.getElementById('category-filter').value;
-            const sort = document.getElementById('sort-filter').value;
-
-            let filtered = artworks.filter(a => !category || a.category === category);
-
-            switch(sort) {
-                case 'price-low':
-                    filtered.sort((a, b) => a.price - b.price);
-                    break;
-                case 'price-high':
-                    filtered.sort((a, b) => b.price - a.price);
-                    break;
-                case 'popular':
-                    filtered.sort((a, b) => b.popularity - a.popularity);
-                    break;
-                default:
-                    filtered.reverse();
-            }
-
-            renderArtworks(filtered);
-        }
-
-        // Art Modal
-        function openArtModal(artwork) {
-            currentArtwork = artwork;
-            document.getElementById('detail-image').src = artwork.image;
-            document.getElementById('detail-title').textContent = artwork.title;
-            document.getElementById('detail-artist').textContent = artwork.artist;
-            document.getElementById('detail-year').textContent = artwork.year;
-            document.getElementById('detail-medium').textContent = artwork.medium;
-            document.getElementById('detail-dimensions').textContent = artwork.dimensions;
-            document.getElementById('detail-price').textContent = `$${artwork.price.toLocaleString()}`;
-            document.getElementById('detail-description').textContent = artwork.description;
-            document.getElementById('add-to-favorites-btn').classList.toggle('active', favorites.includes(artwork.id));
-            
-            document.getElementById('art-modal').classList.add('active');
-        }
-
-        // Add to Cart
-        function addToCart() {
-            if (!currentArtwork) return;
-            
-            const option = document.querySelector('input[name="art-option"]:checked').value;
-            addArtworkToCart(currentArtwork, option);
-            document.getElementById('art-modal').classList.remove('active');
-        }
-
-        function addArtworkToCart(artwork, option = 'original') {
-            const existingItem = cart.find(item => item.id === artwork.id && item.option === option);
-
-            if (existingItem) {
-                existingItem.quantity += 1;
-            } else {
-                cart.push({
-                    ...artwork,
-                    quantity: 1,
-                    option: option,
-                    cartId: Date.now()
-                });
-            }
-
-            saveToLocalStorage();
-            updateBadges();
-            showNotification(`${artwork.title} added to cart!`);
-        }
-
-        // Open Cart Modal
-        function openCartModal() {
-            const modal = document.getElementById('cart-modal');
-            const itemsContainer = document.getElementById('cart-items');
-
-            if (cart.length === 0) {
-                itemsContainer.innerHTML = '<div class="cart-empty">Your cart is empty. Explore our gallery!</div>';
-            } else {
-                itemsContainer.innerHTML = cart.map(item => `
-                    <div class="cart-item">
-                        <img src="${item.image}" alt="${item.title}" class="cart-item-image">
-                        <div class="cart-item-info">
-                            <div class="cart-item-name">${item.title}</div>
-                            <div class="cart-item-details">Artist: ${item.artist}</div>
-                            <div class="cart-item-details">Type: ${capitalizeOption(item.option)}</div>
-                            <div class="cart-item-price">$${(item.price * item.quantity).toLocaleString()}</div>
-                        </div>
-                        <button class="cart-item-remove" data-cart-id="${item.cartId}">✕</button>
-                    </div>
-                `).join('');
-
-                document.querySelectorAll('.cart-item-remove').forEach(btn => {
-                    btn.addEventListener('click', (e) => {
-                        const cartId = parseInt(e.target.dataset.cartId);
-                        cart = cart.filter(item => item.cartId !== cartId);
-                        saveToLocalStorage();
-                        updateBadges();
-                        openCartModal();
-                    });
-                });
-            }
-
-            updateCartSummary();
-            modal.classList.add('active');
-        }
-
-        // Update Cart Summary
-        function updateCartSummary() {
-            const subtotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
-            const shipping = subtotal > 0 ? (subtotal > 100 ? 0 : 25) : 0;
-            const total = subtotal + shipping;
-
-            document.getElementById('subtotal').textContent = `$${subtotal.toLocaleString()}`;
-            document.getElementById('shipping').textContent = shipping === 0 ? 'FREE' : `$${shipping.toLocaleString()}`;
-            document.getElementById('total').textContent = `$${total.toLocaleString()}`;
-        }
-
-        // Favorites
-        function toggleFavoriteArtwork(artworkId, btn) {
-            if (favorites.includes(artworkId)) {
-                favorites = favorites.filter(id => id !== artworkId);
-                btn?.classList.remove('active');
-            } else {
-                favorites.push(artworkId);
-                btn?.classList.add('active');
-            }
-            saveToLocalStorage();
-            updateBadges();
-        }
-
-        function toggleFavorite() {
-            if (!currentArtwork) return;
-            toggleFavoriteArtwork(currentArtwork.id, document.getElementById('add-to-favorites-btn'));
-        }
-
-        // Update Badges
-        function updateBadges() {
-            const badgeElements = document.querySelectorAll('.badge');
-            if (badgeElements[0]) badgeElements[0].textContent = favorites.length;
-            if (badgeElements[1]) badgeElements[1].textContent = cart.length;
-        }
-
-        // Local Storage
-        function saveToLocalStorage() {
-            localStorage.setItem('art-cart', JSON.stringify(cart));
-            localStorage.setItem('art-favorites', JSON.stringify(favorites));
-        }
-
-        function loadFromLocalStorage() {
-            const savedCart = localStorage.getItem('art-cart');
-            const savedFavorites = localStorage.getItem('art-favorites');
-
-            if (savedCart) cart = JSON.parse(savedCart);
-            if (savedFavorites) favorites = JSON.parse(savedFavorites);
-        }
-
-        // Utilities
-        function capitalizeOption(option) {
-            return option.charAt(0).toUpperCase() + option.slice(1);
-        }
-
-        function showNotification(message) {
-            const notification = document.createElement('div');
-            notification.style.cssText = `
-                position: fixed;
-                top: 20px;
-                right: 20px;
-                background: linear-gradient(135deg, #c7306b, #d4427d);
-                color: white;
-                padding: 16px 24px;
-                border-radius: 8px;
-                z-index: 2000;
-                animation: slideInRight 0.3s;
-                box-shadow: 0 4px 15px rgba(199, 48, 107, 0.3);
-            `;
-            notification.textContent = message;
-            document.body.appendChild(notification);
-
-            setTimeout(() => notification.remove(), 3000);
-        }
-        const cards = document.querySelectorAll('.art-card');
-
-const observer = new IntersectionObserver(entries => {
-    entries.forEach(entry => {
-        if (entry.isIntersecting) {
-            entry.target.style.opacity = "1";
-            entry.target.style.transform = "translateY(0)";
-        }
-    });
-});
-
-cards.forEach(card => {
-    card.style.opacity = "0";
-    card.style.transform = "translateY(30px)";
-    card.style.transition = "all 0.6s ease";
-    observer.observe(card);
-});
-    </script>
-</body>
-</html>
