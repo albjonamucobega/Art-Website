@@ -213,42 +213,42 @@
                 id: 1,
                 name: "Sarah Mitchell",
                 specialty: "Oil Paintings",
-                image: "images/upcoming-art-1.jpg",
+                image: "images/sarah mitchell.jpg",
                 description: "Award-winning oil painter specializing in landscapes and natural light."
             },
             {
                 id: 2,
                 name: "James Chen",
                 specialty: "Watercolor Art",
-                image: "images/upcoming-art-1.jpg",
+                image: "images/james chen.png",
                 description: "Contemporary watercolor artist creating serene and expressive works."
             },
             {
                 id: 3,
                 name: "Elena Rodriguez",
                 specialty: "Sketches & Drawings",
-                image: "images/upcoming-art-1.jpg",
+                image: "images/elena rodrigez.jpg",
                 description: "Master draughtsman known for detailed architectural and figure studies."
             },
             {
                 id: 4,
                 name: "Marcus Lee",
                 specialty: "Digital Art",
-                image: "images/upcoming-art-1.jpg",
+                image: "images/marcus lee.jpg",
                 description: "Innovative digital artist pushing the boundaries of modern art."
             },
             {
                 id: 5,
                 name: "Sofia Larsson",
                 specialty: "Abstract & Acrylic",
-                image: "images/upcoming-art-1.jpg",
+                image: "images/sofia larson.jpg",
                 description: "Bold abstract artist exploring color theory and emotional expression."
             },
             {
                 id: 6,
                 name: "David Park",
                 specialty: "Mixed Media",
-                image: "images/upcoming-art-1.jpg",
+                image: "images/david park.jpg",
                 description: "Experimental artist combining traditional and contemporary techniques."
             }
         ];
