@@ -1,0 +1,2200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ArtVerse - Premium Paintings & Drawings Gallery</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-color: #c7306b;
+            --secondary-color: #44a08d;
+            --tertiary-color: #f39c42;
+            --light-bg: #f8f9fa;
+            --white: #ffffff;
+            --text-dark: #2c3e50;
+            --text-light: #7f8c8d;
+            --border-color: #e0e0e0;
+            --shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            --shadow-lg: 0 8px 30px rgba(0, 0, 0, 0.15);
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: var(--text-dark);
+            line-height: 1.6;
+            background-color: var(--white);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Navbar */
+        .navbar {
+            background-color: var(--white);
+            box-shadow: var(--shadow);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .navbar-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+
+        .logo-container:hover {
+            transform: scale(1.05);
+        }
+
+        .logo-svg {
+            width: 45px;
+            height: 45px;
+        }
+
+        .logo-text {
+            font-size: 26px;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 35px;
+        }
+
+        .nav-link {
+            text-decoration: none;
+            color: var(--text-dark);
+            font-weight: 500;
+            transition: color 0.3s;
+            position: relative;
+        }
+
+        .nav-link:hover {
+            color: var(--primary-color);
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: var(--primary-color);
+            transition: width 0.3s;
+        }
+
+        .nav-link:hover::after {
+            width: 100%;
+        }
+
+        .nav-icons {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .icon-btn {
+            font-size: 20px;
+            color: var(--text-dark);
+            cursor: pointer;
+            transition: color 0.3s;
+            position: relative;
+            text-decoration: none;
+            background: none;
+            border: none;
+        }
+
+        .icon-btn:hover {
+            color: var(--primary-color);
+        }
+
+        .badge {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background: linear-gradient(135deg, var(--primary-color), var(--tertiary-color));
+            color: white;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 11px;
+            font-weight: bold;
+        }
+
+        /* Search Bar */
+        .search-bar {
+            background-color: var(--light-bg);
+            padding: 20px 0;
+            display: none;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .search-bar.active {
+            display: block;
+        }
+
+        .search-bar .container {
+            display: flex;
+            gap: 10px;
+        }
+
+        #search-input {
+            flex: 1;
+            padding: 12px 15px;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+
+        #search-input:focus {
+            outline: none;
+            border-color: var(--primary-color);
+        }
+
+        #search-close {
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: var(--text-dark);
+            font-size: 20px;
+        }
+
+        /* Hero Section */
+        .hero {
+            display: flex;
+            align-items: center;
+            gap: 50px;
+            padding: 80px 0;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+        }
+
+        .hero-content {
+            flex: 1;
+        }
+
+        .hero-content h1 {
+            font-size: 52px;
+            margin-bottom: 20px;
+            font-weight: 700;
+            color: var(--text-dark);
+            line-height: 1.2;
+        }
+
+        .hero-content p {
+            font-size: 18px;
+            margin-bottom: 30px;
+            color: var(--text-light);
+            line-height: 1.8;
+        }
+
+        .hero-image {
+            flex: 1;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        .hero-image svg {
+            width: 100%;
+            max-width: 450px;
+            filter: drop-shadow(0 10px 30px rgba(0, 0, 0, 0.1));
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+
+        /* Buttons */
+        .btn {
+            padding: 14px 35px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 600;
+            transition: all 0.3s;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary-color), #d4427d);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(199, 48, 107, 0.3);
+        }
+
+        .btn-secondary {
+            background-color: transparent;
+            color: var(--primary-color);
+            border: 2px solid var(--primary-color);
+        }
+
+        .btn-secondary:hover {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        .btn-block {
+            width: 100%;
+            margin-top: 20px;
+        }
+
+        /* Featured Section */
+        .featured {
+            padding: 80px 0;
+            background-color: var(--light-bg);
+        }
+
+        .featured h2,
+        .gallery h2,
+        .artists h2,
+        .exhibitions h2,
+        .about h2,
+        .contact h2,
+        .categories h2 {
+            font-size: 42px;
+            text-align: center;
+            margin-bottom: 50px;
+            color: var(--text-dark);
+            position: relative;
+            display: inline-block;
+            width: 100%;
+        }
+
+        .featured h2::after,
+        .gallery h2::after,
+        .artists h2::after,
+        .exhibitions h2::after,
+        .about h2::after,
+        .contact h2::after,
+        .categories h2::after {
+            content: '';
+            position: absolute;
+            bottom: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 4px;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            border-radius: 2px;
+        }
+
+        .featured-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+        }
+
+        .featured-card {
+            background: var(--white);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+
+        .featured-card:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .featured-image {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+
+        .featured-card:hover .featured-image {
+            transform: scale(1.05);
+        }
+
+        .featured-info {
+            padding: 20px;
+        }
+
+        .featured-title {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .featured-artist {
+            font-size: 14px;
+            color: var(--text-light);
+            margin-bottom: 10px;
+        }
+
+        .featured-price {
+            font-size: 20px;
+            color: var(--primary-color);
+            font-weight: 700;
+        }
+
+        /* Categories */
+        .categories {
+            padding: 80px 0;
+        }
+
+        .category-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 25px;
+            margin-top: 50px;
+        }
+
+        .category-card {
+            background: var(--white);
+            border-radius: 12px;
+            padding: 30px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: 1px solid var(--border-color);
+        }
+
+        .category-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-lg);
+            border-color: var(--primary-color);
+        }
+
+        .category-icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, var(--primary-color), var(--tertiary-color));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+            color: white;
+            margin: 0 auto 15px;
+        }
+
+        .category-card h3 {
+            font-size: 18px;
+            margin-bottom: 10px;
+        }
+
+        .category-card p {
+            color: var(--text-light);
+            font-size: 14px;
+        }
+
+        /* Gallery Section */
+        .gallery {
+            padding: 80px 0;
+            background-color: var(--light-bg);
+        }
+
+        .gallery-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 50px;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .gallery-filters {
+            display: flex;
+            gap: 15px;
+        }
+
+        .gallery-filters select {
+            padding: 12px 15px;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .gallery-filters select:hover {
+            border-color: var(--primary-color);
+        }
+
+        .gallery-filters select:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(199, 48, 107, 0.1);
+        }
+
+        .artwork-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 30px;
+        }
+
+        .artwork-card {
+            background: var(--white);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+
+        .artwork-card:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .artwork-image {
+            width: 100%;
+            height: 280px;
+            object-fit: cover;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .artwork-card:hover .artwork-image {
+            transform: scale(1.08);
+        }
+
+        .artwork-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.6);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .artwork-card:hover .artwork-overlay {
+            opacity: 1;
+        }
+
+        .overlay-buttons {
+            display: flex;
+            gap: 15px;
+        }
+
+        .overlay-btn {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            background: white;
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            color: var(--primary-color);
+            transition: all 0.3s;
+        }
+
+        .overlay-btn:hover {
+            background: var(--primary-color);
+            color: white;
+            transform: scale(1.1);
+        }
+
+        .artwork-info {
+            padding: 20px;
+        }
+
+        .artwork-title {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .artwork-artist {
+            font-size: 14px;
+            color: var(--text-light);
+            margin-bottom: 10px;
+        }
+
+        .artwork-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+
+        .artwork-medium {
+            font-size: 12px;
+            color: var(--text-light);
+        }
+
+        .artwork-price {
+            font-size: 18px;
+            color: var(--primary-color);
+            font-weight: 700;
+        }
+
+        /* Artists Section */
+        .artists {
+            padding: 80px 0;
+        }
+
+        .artists-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 35px;
+            margin-top: 50px;
+        }
+
+        .artist-card {
+            background: var(--white);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: all 0.3s;
+        }
+
+        .artist-card:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .artist-image {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+
+        .artist-info {
+            padding: 25px;
+            text-align: center;
+        }
+
+        .artist-name {
+            font-size: 22px;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .artist-specialty {
+            font-size: 14px;
+            color: var(--primary-color);
+            font-weight: 600;
+            margin-bottom: 15px;
+        }
+
+        .artist-description {
+            font-size: 14px;
+            color: var(--text-light);
+            margin-bottom: 15px;
+            line-height: 1.6;
+        }
+
+        .artist-social {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+        }
+
+        .artist-social a {
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            background: var(--light-bg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary-color);
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+
+        .artist-social a:hover {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        /* Exhibitions Section */
+        .exhibitions {
+            padding: 80px 0;
+            background-color: var(--light-bg);
+        }
+
+        .exhibitions-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 35px;
+            margin-top: 50px;
+        }
+
+        .exhibition-card {
+            background: var(--white);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: all 0.3s;
+        }
+
+        .exhibition-card:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .exhibition-image {
+            width: 100%;
+            height: 250px;
+            overflow: hidden;
+        }
+
+        .exhibition-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s;
+        }
+
+        .exhibition-card:hover .exhibition-image img {
+            transform: scale(1.08);
+        }
+
+        .exhibition-info {
+            padding: 25px;
+        }
+
+        .exhibition-info h3 {
+            font-size: 22px;
+            font-weight: 700;
+            margin-bottom: 15px;
+        }
+
+        .exhibition-date,
+        .exhibition-location {
+            font-size: 14px;
+            color: var(--text-light);
+            margin-bottom: 10px;
+        }
+
+        .exhibition-info p {
+            margin-bottom: 15px;
+            line-height: 1.6;
+            color: var(--text-light);
+        }
+
+        /* About Section */
+        .about {
+            padding: 80px 0;
+        }
+
+        .about-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 50px;
+            align-items: center;
+            margin-top: 50px;
+        }
+
+        .about-text h2 {
+            font-size: 32px;
+            margin-bottom: 20px;
+            text-align: left;
+        }
+
+        .about-text h2::after {
+            left: 0;
+        }
+
+        .about-text p {
+            margin-bottom: 15px;
+            line-height: 1.8;
+            color: var(--text-light);
+        }
+
+        .about-features {
+            list-style: none;
+            margin-top: 25px;
+        }
+
+        .about-features li {
+            padding: 12px 0;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 15px;
+        }
+
+        .about-features .icon {
+            color: var(--secondary-color);
+            font-size: 18px;
+        }
+
+        .about-image img {
+            width: 100%;
+            border-radius: 12px;
+            box-shadow: var(--shadow-lg);
+        }
+
+        /* Contact Section */
+        .contact {
+            padding: 80px 0;
+            background-color: var(--light-bg);
+        }
+
+        .contact-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 50px;
+            margin-top: 50px;
+        }
+
+        .contact-form {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .contact-form input,
+        .contact-form textarea,
+        .contact-form select {
+            padding: 15px;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            font-size: 14px;
+            font-family: inherit;
+            transition: all 0.3s;
+        }
+
+        .contact-form input:focus,
+        .contact-form textarea:focus,
+        .contact-form select:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(199, 48, 107, 0.1);
+        }
+
+        .contact-info {
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+        }
+
+        .info-item {
+            display: flex;
+            gap: 20px;
+            align-items: flex-start;
+        }
+
+        .info-icon {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, var(--primary-color), var(--tertiary-color));
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 22px;
+            flex-shrink: 0;
+        }
+
+        .info-item h4 {
+            margin-bottom: 5px;
+            color: var(--text-dark);
+        }
+
+        .info-item p {
+            color: var(--text-light);
+        }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.6);
+            animation: fadeIn 0.3s;
+        }
+
+        .modal.active {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow-y: auto;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .modal-content {
+            background-color: var(--white);
+            padding: 30px;
+            border-radius: 12px;
+            max-width: 600px;
+            width: 90%;
+            max-height: 90vh;
+            overflow-y: auto;
+            position: relative;
+            animation: slideUp 0.3s;
+        }
+
+        @keyframes slideUp {
+            from {
+                transform: translateY(50px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .art-modal-content {
+            max-width: 900px;
+        }
+
+        .art-detail-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 35px;
+        }
+
+        .detail-image img {
+            width: 100%;
+            border-radius: 12px;
+            box-shadow: var(--shadow-lg);
+        }
+
+        .detail-info h2 {
+            font-size: 28px;
+            margin-bottom: 15px;
+        }
+
+        .detail-artist {
+            color: var(--text-light);
+            margin-bottom: 15px;
+        }
+
+        .detail-meta {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-bottom: 15px;
+            font-size: 14px;
+            color: var(--text-light);
+        }
+
+        .detail-price {
+            font-size: 28px;
+            color: var(--primary-color);
+            font-weight: 700;
+            margin-bottom: 15px;
+        }
+
+        .detail-description {
+            margin-bottom: 20px;
+            line-height: 1.8;
+            color: var(--text-light);
+        }
+
+        .detail-actions {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 25px;
+        }
+
+        .detail-actions button {
+            flex: 1;
+        }
+
+        .detail-options {
+            border-top: 1px solid var(--border-color);
+            padding-top: 20px;
+        }
+
+        .detail-options h4 {
+            margin-bottom: 15px;
+        }
+
+        .options-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .option-label {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            cursor: pointer;
+            padding: 10px;
+            border-radius: 8px;
+            transition: background-color 0.3s;
+        }
+
+        .option-label:hover {
+            background-color: var(--light-bg);
+        }
+
+        .option-label input[type="radio"] {
+            width: 18px;
+            height: 18px;
+            cursor: pointer;
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 15px;
+        }
+
+        .close-btn {
+            background: none;
+            border: none;
+            font-size: 28px;
+            cursor: pointer;
+            color: var(--text-dark);
+            transition: color 0.3s;
+        }
+
+        .close-btn:hover {
+            color: var(--primary-color);
+        }
+
+        .cart-items {
+            margin-bottom: 25px;
+        }
+
+        .cart-empty {
+            text-align: center;
+            padding: 40px;
+            color: var(--text-light);
+        }
+
+        .cart-item {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 20px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .cart-item-image {
+            width: 100px;
+            height: 100px;
+            object-fit: cover;
+            border-radius: 8px;
+        }
+
+        .cart-item-info {
+            flex: 1;
+        }
+
+        .cart-item-name {
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+
+        .cart-item-details {
+            font-size: 13px;
+            color: var(--text-light);
+            margin-bottom: 5px;
+        }
+
+        .cart-item-price {
+            font-weight: 600;
+            color: var(--primary-color);
+        }
+
+        .cart-item-remove {
+            background: none;
+            border: none;
+            color: var(--primary-color);
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        .cart-summary {
+            background-color: var(--light-bg);
+            padding: 20px;
+            border-radius: 8px;
+        }
+
+        .summary-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 12px;
+            font-size: 14px;
+        }
+
+        .summary-row.total {
+            border-top: 2px solid var(--border-color);
+            padding-top: 12px;
+            font-weight: 700;
+            font-size: 18px;
+        }
+
+        /* Footer */
+        .footer {
+            background: linear-gradient(135deg, var(--text-dark), #34495e);
+            color: white;
+            padding: 60px 0 20px;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 35px;
+            margin-bottom: 35px;
+        }
+
+        .footer-section h4 {
+            margin-bottom: 20px;
+            color: var(--tertiary-color);
+            font-size: 16px;
+        }
+
+        .footer-section ul {
+            list-style: none;
+        }
+
+        .footer-section a {
+            color: rgba(255, 255, 255, 0.7);
+            text-decoration: none;
+            display: block;
+            margin-bottom: 10px;
+            transition: color 0.3s;
+            font-size: 14px;
+        }
+
+        .footer-section a:hover {
+            color: var(--tertiary-color);
+        }
+
+        .social-links {
+            display: flex;
+            gap: 15px;
+        }
+
+        .social-links a {
+            display: inline-flex;
+            width: 40px;
+            height: 40px;
+            align-items: center;
+            justify-content: center;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            color: white;
+            transition: all 0.3s;
+            text-decoration: none;
+        }
+
+        .social-links a:hover {
+            background: linear-gradient(135deg, var(--primary-color), var(--tertiary-color));
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 14px;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero {
+                flex-direction: column;
+                padding: 50px 0;
+            }
+
+            .hero-content h1 {
+                font-size: 36px;
+            }
+
+            .nav-links {
+                gap: 15px;
+                display: none;
+            }
+
+            .hero-image {
+                order: -1;
+            }
+
+            .gallery-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .gallery-filters {
+                width: 100%;
+                flex-direction: column;
+            }
+
+            .gallery-filters select {
+                width: 100%;
+            }
+
+            .artwork-grid {
+                grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+                gap: 15px;
+            }
+
+            .about-content,
+            .contact-content,
+            .art-detail-content {
+                grid-template-columns: 1fr;
+            }
+
+            .exhibitions-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .modal-content {
+                max-width: 95vw;
+                padding: 20px;
+            }
+
+            .featured-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .category-grid {
+                grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            }
+
+            .artists-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        section {
+            scroll-margin-top: 80px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-content">
+                <div class="logo-container">
+                    <svg class="logo-svg" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                        <ellipse cx="50" cy="60" rx="35" ry="25" fill="#f0e6d2" stroke="#8b4513" stroke-width="2"/>
+                        <circle cx="30" cy="50" r="5" fill="#ff6b6b"/>
+                        <circle cx="45" cy="45" r="5" fill="#4ecdc4"/>
+                        <circle cx="60" cy="45" r="5" fill="#ffe66d"/>
+                        <circle cx="70" cy="55" r="5" fill="#95e1d3"/>
+                        <circle cx="35" cy="65" r="5" fill="#a29bfe"/>
+                        <circle cx="65" cy="65" r="5" fill="#fd79a8"/>
+                        <rect x="48" y="15" width="4" height="35" fill="#8b4513"/>
+                        <circle cx="50" cy="18" r="6" fill="#d4a574"/>
+                        <rect x="10" y="20" width="25" height="30" fill="none" stroke="#8b4513" stroke-width="2"/>
+                        <rect x="12" y="22" width="21" height="26" fill="rgba(255,107,107,0.1)"/>
+                        <line x1="15" y1="30" x2="25" y2="35" stroke="#ff6b6b" stroke-width="1.5"/>
+                        <line x1="14" y1="40" x2="28" y2="42" stroke="#4ecdc4" stroke-width="1.5"/>
+                    </svg>
+                    <span class="logo-text">ArtVerse</span>
+                </div>
+                <ul class="nav-links">
+                    <li><a href="#home" class="nav-link">Home</a></li>
+                    <li><a href="#gallery" class="nav-link">Gallery</a></li>
+                    <li><a href="#artists" class="nav-link">Artists</a></li>
+                    <li><a href="#exhibitions" class="nav-link">Exhibitions</a></li>
+                    <li><a href="#contact" class="nav-link">Contact</a></li>
+                </ul>
+                <div class="nav-icons">
+                    <button id="search-btn" class="icon-btn">🔍</button>
+                    <button id="favorites-btn" class="icon-btn">❤️<span class="badge">0</span></button>
+                    <button id="cart-btn" class="icon-btn">🛒<span class="badge">0</span></button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Search Bar -->
+    <div class="search-bar" id="search-bar">
+        <div class="container">
+            <input type="text" id="search-input" placeholder="Search artworks, artists...">
+            <button id="search-close">✕</button>
+        </div>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <h1>Discover Exceptional Art</h1>
+            <p>Explore curated collections of original paintings and drawings from talented artists around the world</p>
+            <a href="#gallery" class="btn btn-primary">Explore Gallery</a>
+        </div>
+        <div class="hero-image">
+            <svg viewBox="0 0 400 350" xmlns="http://www.w3.org/2000/svg">
+                <rect x="50" y="40" width="300" height="250" fill="#ffffff" stroke="#d4a574" stroke-width="8" rx="10"/>
+                <defs>
+                    <linearGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="100%">
+                        <stop offset="0%" style="stop-color:#ff6b6b;stop-opacity:1" />
+                        <stop offset="100%" style="stop-color:#fd79a8;stop-opacity:1" />
+                    </linearGradient>
+                    <linearGradient id="grad2" x1="0%" y1="0%" x2="100%" y2="100%">
+                        <stop offset="0%" style="stop-color:#4ecdc4;stop-opacity:1" />
+                        <stop offset="100%" style="stop-color:#44a08d;stop-opacity:1" />
+                    </linearGradient>
+                </defs>
+                <circle cx="120" cy="100" r="40" fill="url(#grad1)" opacity="0.7"/>
+                <circle cx="280" cy="140" r="50" fill="url(#grad2)" opacity="0.7"/>
+                <path d="M 100 250 Q 150 200 200 220 T 300 250" stroke="#a29bfe" stroke-width="3" fill="none" opacity="0.8"/>
+                <rect x="70" y="180" width="60" height="40" fill="#ffe66d" opacity="0.6" transform="rotate(20 100 200)"/>
+                <ellipse cx="330" cy="270" rx="15" ry="12" fill="#f0e6d2" stroke="#8b4513" stroke-width="1"/>
+                <circle cx="320" cy="268" r="2" fill="#ff6b6b"/>
+                <circle cx="330" cy="263" r="2" fill="#4ecdc4"/>
+                <circle cx="340" cy="268" r="2" fill="#ffe66d"/>
+            </svg>
+        </div>
+    </section>
+
+    <!-- Featured Artworks -->
+    <section class="featured">
+        <div class="container">
+            <h2>Featured Artworks</h2>
+            <div class="featured-grid" id="featured-grid">
+            </div>
+        </div>
+    </section>
+
+    <!-- Categories -->
+    <section class="categories">
+        <div class="container">
+            <h2>Browse by Category</h2>
+            <div class="category-grid">
+                <div class="category-card" data-category="oil">
+                    <div class="category-icon">🎨</div>
+                    <h3>Oil Paintings</h3>
+                    <p>Classic and contemporary oil artworks</p>
+                </div>
+                <div class="category-card" data-category="watercolor">
+                    <div class="category-icon">💧</div>
+                    <h3>Watercolor</h3>
+                    <p>Delicate and flowing watercolor pieces</p>
+                </div>
+                <div class="category-card" data-category="sketches">
+                    <div class="category-icon">✏️</div>
+                    <h3>Sketches</h3>
+                    <p>Pencil and charcoal sketches</p>
+                </div>
+                <div class="category-card" data-category="digital">
+                    <div class="category-icon">💻</div>
+                    <h3>Digital Art</h3>
+                    <p>Modern digital creations</p>
+                </div>
+                <div class="category-card" data-category="acrylic">
+                    <div class="category-icon">🖌️</div>
+                    <h3>Acrylic</h3>
+                    <p>Vibrant acrylic paintings</p>
+                </div>
+                <div class="category-card" data-category="mixed">
+                    <div class="category-icon">🎭</div>
+                    <h3>Mixed Media</h3>
+                    <p>Experimental mixed media artworks</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Gallery Section -->
+    <section class="gallery" id="gallery">
+        <div class="container">
+            <div class="gallery-header">
+                <h2>Artwork Gallery</h2>
+                <div class="gallery-filters">
+                    <select id="category-filter">
+                        <option value="">All Categories</option>
+                        <option value="oil">Oil Paintings</option>
+                        <option value="watercolor">Watercolor</option>
+                        <option value="sketches">Sketches</option>
+                        <option value="digital">Digital Art</option>
+                        <option value="acrylic">Acrylic</option>
+                        <option value="mixed">Mixed Media</option>
+                    </select>
+                    <select id="sort-filter">
+                        <option value="newest">Newest</option>
+                        <option value="price-low">Price: Low to High</option>
+                        <option value="price-high">Price: High to Low</option>
+                        <option value="popular">Most Popular</option>
+                    </select>
+                </div>
+            </div>
+            <div class="artwork-grid" id="artwork-grid">
+            </div>
+        </div>
+    </section>
+
+    <!-- Artists Section -->
+    <section class="artists" id="artists">
+        <div class="container">
+            <h2>Featured Artists</h2>
+            <div class="artists-grid" id="artists-grid">
+            </div>
+        </div>
+    </section>
+
+    <!-- Exhibitions Section -->
+    <section class="exhibitions" id="exhibitions">
+        <div class="container">
+            <h2>Upcoming Exhibitions</h2>
+            <div class="exhibitions-grid">
+                <div class="exhibition-card">
+                    <div class="exhibition-image">
+                        <img src="https://via.placeholder.com/400x250?text=Spring+Exhibition" alt="Spring Exhibition">
+                    </div>
+                    <div class="exhibition-info">
+                        <h3>Spring Collection 2024</h3>
+                        <p class="exhibition-date">📅 March 15 - April 30, 2024</p>
+                        <p class="exhibition-location">📍 Central Art Gallery, New York</p>
+                        <p>Celebrate the season with vibrant artworks featuring spring themes and contemporary expressions.</p>
+                        <a href="#" class="btn btn-secondary">Learn More</a>
+                    </div>
+                </div>
+                <div class="exhibition-card">
+                    <div class="exhibition-image">
+                        <img src="https://via.placeholder.com/400x250?text=Summer+Exhibition" alt="Summer Exhibition">
+                    </div>
+                    <div class="exhibition-info">
+                        <h3>Summer Modern Art Show</h3>
+                        <p class="exhibition-date">📅 June 1 - July 31, 2024</p>
+                        <p class="exhibition-location">📍 International Art Center, London</p>
+                        <p>Experience cutting-edge modern art from emerging and established artists worldwide.</p>
+                        <a href="#" class="btn btn-secondary">Learn More</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="about">
+        <div class="container">
+            <div class="about-content">
+                <div class="about-text">
+                    <h2>About ArtVerse</h2>
+                    <p>ArtVerse is a premier online platform dedicated to showcasing exceptional paintings and drawings from talented artists around the globe. We believe in making fine art accessible to everyone.</p>
+                    <ul class="about-features">
+                        <li><span class="icon">✓</span> Curated Collection of Original Artworks</li>
+                        <li><span class="icon">✓</span> Direct Support for Independent Artists</li>
+                        <li><span class="icon">✓</span> Certificate of Authenticity</li>
+                        <li><span class="icon">✓</span> Secure Shipping & Handling</li>
+                        <li><span class="icon">✓</span> Professional Art Consultation</li>
+                        <li><span class="icon">✓</span> Limited Edition Prints Available</li>
+                    </ul>
+                </div>
+                <div class="about-image">
+                    <img src="https://via.placeholder.com/400x300?text=ArtVerse+Studio" alt="About ArtVerse">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="contact" id="contact">
+        <div class="container">
+            <h2>Get In Touch</h2>
+            <div class="contact-content">
+                <form class="contact-form" id="contact-form">
+                    <input type="text" placeholder="Your Name" required>
+                    <input type="email" placeholder="Your Email" required>
+                    <select required>
+                        <option value="">Select Inquiry Type</option>
+                        <option value="commission">Art Commission</option>
+                        <option value="purchase">Purchase Inquiry</option>
+                        <option value="collaboration">Artist Collaboration</option>
+                        <option value="other">Other</option>
+                    </select>
+                    <textarea placeholder="Your Message" rows="5" required></textarea>
+                    <button type="submit" class="btn btn-primary">Send Message</button>
+                </form>
+                <div class="contact-info">
+                    <div class="info-item">
+                        <div class="info-icon">📍</div>
+                        <div>
+                            <h4>Address</h4>
+                            <p>123 Arts Avenue, Creative District, NY 10001</p>
+                        </div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-icon">📞</div>
+                        <div>
+                            <h4>Phone</h4>
+                            <p>+1 (555) 123-4567</p>
+                        </div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-icon">✉️</div>
+                        <div>
+                            <h4>Email</h4>
+                            <p>hello@artverse.com</p>
+                        </div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-icon">🕐</div>
+                        <div>
+                            <h4>Hours</h4>
+                            <p>Mon - Sun: 10:00 AM - 6:00 PM</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Art Modal -->
+    <div class="modal" id="art-modal">
+        <div class="modal-content art-modal-content">
+            <button class="close-btn">✕</button>
+            <div class="art-detail-content">
+                <div class="detail-image">
+                    <img id="detail-image" src="" alt="">
+                </div>
+                <div class="detail-info">
+                    <h2 id="detail-title"></h2>
+                    <p class="detail-artist"><strong>Artist:</strong> <span id="detail-artist"></span></p>
+                    <div class="detail-meta">
+                        <span><strong>Year:</strong> <span id="detail-year"></span></span>
+                        <span><strong>Medium:</strong> <span id="detail-medium"></span></span>
+                        <span><strong>Dimensions:</strong> <span id="detail-dimensions"></span></span>
+                    </div>
+                    <p class="detail-price" id="detail-price"></p>
+                    <p id="detail-description" class="detail-description"></p>
+                    <div class="detail-actions">
+                        <button class="btn btn-primary" id="add-to-cart-btn">Add to Cart</button>
+                        <button class="btn btn-secondary" id="add-to-favorites-btn">❤️ Favorites</button>
+                    </div>
+                    <div class="detail-options">
+                        <h4>Purchasing Options:</h4>
+                        <div class="options-list">
+                            <label class="option-label">
+                                <input type="radio" name="art-option" value="original" checked>
+                                <span>Original Artwork</span>
+                            </label>
+                            <label class="option-label">
+                                <input type="radio" name="art-option" value="print">
+                                <span>Limited Edition Print</span>
+                            </label>
+                            <label class="option-label">
+                                <input type="radio" name="art-option" value="canvas">
+                                <span>Canvas Print</span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Cart Modal -->
+    <div class="modal" id="cart-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Shopping Cart</h2>
+                <button class="close-btn">✕</button>
+            </div>
+            <div class="cart-items" id="cart-items">
+            </div>
+            <div class="cart-summary">
+                <div class="summary-row">
+                    <span>Subtotal:</span>
+                    <span id="subtotal">$0.00</span>
+                </div>
+                <div class="summary-row">
+                    <span>Shipping:</span>
+                    <span id="shipping">$0.00</span>
+                </div>
+                <div class="summary-row total">
+                    <span>Total:</span>
+                    <span id="total">$0.00</span>
+                </div>
+                <button class="btn btn-primary btn-block">Proceed to Checkout</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>About</h4>
+                    <ul>
+                        <li><a href="#">Our Story</a></li>
+                        <li><a href="#">Our Team</a></li>
+                        <li><a href="#">Careers</a></li>
+                        <li><a href="#">Press</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Support</h4>
+                    <ul>
+                        <li><a href="#">Contact Us</a></li>
+                        <li><a href="#">FAQ</a></li>
+                        <li><a href="#">Shipping Info</a></li>
+                        <li><a href="#">Returns</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Policies</h4>
+                    <ul>
+                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="#">Terms of Service</a></li>
+                        <li><a href="#">Cookie Policy</a></li>
+                        <li><a href="#">Accessibility</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Follow Us</h4>
+                    <div class="social-links">
+                        <a href="#">f</a>
+                        <a href="#">𝕏</a>
+                        <a href="#">📷</a>
+                        <a href="#">📌</a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 ArtVerse. All rights reserved. Celebrating artists worldwide.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Artwork Database
+        const artworks = [
+            {
+                id: 1,
+                title: "Sunset Over Mountains",
+                artist: "Sarah Mitchell",
+                category: "oil",
+                year: 2023,
+                medium: "Oil on Canvas",
+                dimensions: "80x60 cm",
+                price: 2500,
+                image: "https://via.placeholder.com/400x350?text=Sunset+Mountains",
+                description: "A breathtaking landscape capturing the golden hour over majestic mountain peaks.",
+                popularity: 95
+            },
+            {
+                id: 2,
+                title: "Ocean Waves",
+                artist: "James Chen",
+                category: "watercolor",
+                year: 2024,
+                medium: "Watercolor",
+                dimensions: "70x50 cm",
+                price: 1800,
+                image: "https://via.placeholder.com/400x350?text=Ocean+Waves",
+                description: "A serene watercolor depicting the peaceful rhythm of ocean waves at dawn.",
+                popularity: 88
+            },
+            {
+                id: 3,
+                title: "Urban Sketches",
+                artist: "Elena Rodriguez",
+                category: "sketches",
+                year: 2023,
+                medium: "Graphite Pencil",
+                dimensions: "40x50 cm",
+                price: 450,
+                image: "https://via.placeholder.com/400x350?text=Urban+Sketches",
+                description: "A series of urban architectural studies drawn in fine graphite pencil.",
+                popularity: 72
+            },
+            {
+                id: 4,
+                title: "Digital Dreams",
+                artist: "Marcus Lee",
+                category: "digital",
+                year: 2024,
+                medium: "Digital",
+                dimensions: "100x75 cm",
+                price: 1200,
+                image: "https://via.placeholder.com/400x350?text=Digital+Dreams",
+                description: "An imaginative digital artwork blending surrealism with modern aesthetics.",
+                popularity: 85
+            },
+            {
+                id: 5,
+                title: "Vibrant Abstraction",
+                artist: "Sofia Larsson",
+                category: "acrylic",
+                year: 2023,
+                medium: "Acrylic on Canvas",
+                dimensions: "90x90 cm",
+                price: 3200,
+                image: "https://via.placeholder.com/400x350?text=Vibrant+Abstraction",
+                description: "Bold and expressive abstract work using vibrant acrylic colors.",
+                popularity: 92
+            },
+            {
+                id: 6,
+                title: "Mixed Textures",
+                artist: "David Park",
+                category: "mixed",
+                year: 2024,
+                medium: "Mixed Media",
+                dimensions: "60x80 cm",
+                price: 1950,
+                image: "https://via.placeholder.com/400x350?text=Mixed+Textures",
+                description: "An experimental mixed media piece combining various materials and techniques.",
+                popularity: 78
+            },
+            {
+                id: 7,
+                title: "Portrait of Grace",
+                artist: "Isabella Romano",
+                category: "oil",
+                year: 2023,
+                medium: "Oil on Canvas",
+                dimensions: "70x85 cm",
+                price: 3500,
+                image: "https://via.placeholder.com/400x350?text=Portrait+Grace",
+                description: "An elegant portrait capturing the essence of grace and elegance.",
+                popularity: 90
+            },
+            {
+                id: 8,
+                title: "Floral Garden",
+                artist: "Maya Patel",
+                category: "watercolor",
+                year: 2024,
+                medium: "Watercolor",
+                dimensions: "55x75 cm",
+                price: 1500,
+                image: "https://via.placeholder.com/400x350?text=Floral+Garden",
+                description: "A delicate watercolor garden filled with blooming flowers and soft colors.",
+                popularity: 80
+            },
+            {
+                id: 9,
+                title: "Detailed Landscape",
+                artist: "Thomas Anderson",
+                category: "sketches",
+                year: 2023,
+                medium: "Charcoal",
+                dimensions: "65x90 cm",
+                price: 800,
+                image: "https://via.placeholder.com/400x350?text=Landscape+Detail",
+                description: "A highly detailed landscape sketch rendered in charcoal.",
+                popularity: 75
+            },
+            {
+                id: 10,
+                title: "Neon City",
+                artist: "Alex Zhang",
+                category: "digital",
+                year: 2024,
+                medium: "Digital",
+                dimensions: "120x80 cm",
+                price: 1600,
+                image: "https://via.placeholder.com/400x350?text=Neon+City",
+                description: "A futuristic cityscape rendered in vibrant neon colors.",
+                popularity: 87
+            },
+            {
+                id: 11,
+                title: "Abstract Emotion",
+                artist: "Lucia Moretti",
+                category: "acrylic",
+                year: 2023,
+                medium: "Acrylic on Canvas",
+                dimensions: "100x70 cm",
+                price: 2800,
+                image: "https://via.placeholder.com/400x350?text=Abstract+Emotion",
+                description: "An emotional abstract piece expressing inner feelings through color and form.",
+                popularity: 86
+            },
+            {
+                id: 12,
+                title: "Harmony",
+                artist: "Benjamin Woods",
+                category: "mixed",
+                year: 2024,
+                medium: "Mixed Media",
+                dimensions: "80x60 cm",
+                price: 2100,
+                image: "https://via.placeholder.com/400x350?text=Harmony",
+                description: "A harmonious mixed media composition exploring balance and unity.",
+                popularity: 82
+            }
+        ];
+
+        // Artists Database
+        const artists = [
+            {
+                id: 1,
+                name: "Sarah Mitchell",
+                specialty: "Oil Paintings",
+                image: "https://via.placeholder.com/400x300?text=Sarah+Mitchell",
+                description: "Award-winning oil painter specializing in landscapes and natural light."
+            },
+            {
+                id: 2,
+                name: "James Chen",
+                specialty: "Watercolor Art",
+                image: "https://via.placeholder.com/400x300?text=James+Chen",
+                description: "Contemporary watercolor artist creating serene and expressive works."
+            },
+            {
+                id: 3,
+                name: "Elena Rodriguez",
+                specialty: "Sketches & Drawings",
+                image: "https://via.placeholder.com/400x300?text=Elena+Rodriguez",
+                description: "Master draughtsman known for detailed architectural and figure studies."
+            },
+            {
+                id: 4,
+                name: "Marcus Lee",
+                specialty: "Digital Art",
+                image: "https://via.placeholder.com/400x300?text=Marcus+Lee",
+                description: "Innovative digital artist pushing the boundaries of modern art."
+            },
+            {
+                id: 5,
+                name: "Sofia Larsson",
+                specialty: "Abstract & Acrylic",
+                image: "https://via.placeholder.com/400x300?text=Sofia+Larsson",
+                description: "Bold abstract artist exploring color theory and emotional expression."
+            },
+            {
+                id: 6,
+                name: "David Park",
+                specialty: "Mixed Media",
+                image: "https://via.placeholder.com/400x300?text=David+Park",
+                description: "Experimental artist combining traditional and contemporary techniques."
+            }
+        ];
+
+        // State Management
+        let cart = [];
+        let favorites = [];
+        let currentArtwork = null;
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            loadFromLocalStorage();
+            renderFeatured();
+            renderArtworks(artworks);
+            renderArtists();
+            setupEventListeners();
+            updateBadges();
+        });
+
+        // Setup Event Listeners
+        function setupEventListeners() {
+            // Search
+            document.getElementById('search-btn').addEventListener('click', (e) => {
+                e.preventDefault();
+                document.getElementById('search-bar').classList.toggle('active');
+            });
+
+            document.getElementById('search-close').addEventListener('click', () => {
+                document.getElementById('search-bar').classList.remove('active');
+            });
+
+            document.getElementById('search-input').addEventListener('input', (e) => {
+                const query = e.target.value.toLowerCase();
+                const filtered = artworks.filter(a => 
+                    a.title.toLowerCase().includes(query) ||
+                    a.artist.toLowerCase().includes(query) ||
+                    a.medium.toLowerCase().includes(query)
+                );
+                renderArtworks(filtered);
+            });
+
+            // Filters
+            document.getElementById('category-filter').addEventListener('change', applyFilters);
+            document.getElementById('sort-filter').addEventListener('change', applyFilters);
+
+            // Cart
+            document.getElementById('cart-btn').addEventListener('click', (e) => {
+                e.preventDefault();
+                openCartModal();
+            });
+
+            // Favorites
+            document.getElementById('favorites-btn').addEventListener('click', (e) => {
+                e.preventDefault();
+                const favorited = artworks.filter(a => favorites.includes(a.id));
+                renderArtworks(favorited);
+                document.getElementById('search-bar').classList.remove('active');
+            });
+
+            // Category Cards
+            document.querySelectorAll('.category-card').forEach(card => {
+                card.addEventListener('click', () => {
+                    const category = card.dataset.category;
+                    document.getElementById('category-filter').value = category;
+                    applyFilters();
+                    document.querySelector('.gallery').scrollIntoView({ behavior: 'smooth' });
+                });
+            });
+
+            // Contact Form
+            document.getElementById('contact-form').addEventListener('submit', (e) => {
+                e.preventDefault();
+                alert('Thank you for your message! We will get back to you soon.');
+                e.target.reset();
+            });
+
+            // Modal Close Buttons
+            document.querySelectorAll('.close-btn').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    e.target.closest('.modal').classList.remove('active');
+                });
+            });
+
+            // Modal Background Click
+            document.querySelectorAll('.modal').forEach(modal => {
+                modal.addEventListener('click', (e) => {
+                    if (e.target === modal) {
+                        modal.classList.remove('active');
+                    }
+                });
+            });
+
+            // Product Modal Actions
+            document.getElementById('add-to-cart-btn').addEventListener('click', addToCart);
+            document.getElementById('add-to-favorites-btn').addEventListener('click', toggleFavorite);
+        }
+
+        // Render Featured Artworks
+        function renderFeatured() {
+            const grid = document.getElementById('featured-grid');
+            const featured = artworks.slice(0, 3);
+
+            grid.innerHTML = featured.map(artwork => `
+                <div class="featured-card" data-id="${artwork.id}">
+                    <img src="${artwork.image}" alt="${artwork.title}" class="featured-image">
+                    <div class="featured-info">
+                        <h3 class="featured-title">${artwork.title}</h3>
+                        <p class="featured-artist">by ${artwork.artist}</p>
+                        <p class="featured-price">$${artwork.price.toLocaleString()}</p>
+                    </div>
+                </div>
+            `).join('');
+
+            document.querySelectorAll('.featured-card').forEach(card => {
+                card.addEventListener('click', () => {
+                    const id = parseInt(card.dataset.id);
+                    const artwork = artworks.find(a => a.id === id);
+                    openArtModal(artwork);
+                });
+            });
+        }
+
+        // Render Artworks
+        function renderArtworks(artworksToRender) {
+            const grid = document.getElementById('artwork-grid');
+            grid.innerHTML = '';
+
+            if (artworksToRender.length === 0) {
+                grid.innerHTML = '<p style="grid-column: 1/-1; text-align: center; padding: 40px; color: #7f8c8d;">No artworks found.</p>';
+                return;
+            }
+
+            artworksToRender.forEach(artwork => {
+                const card = document.createElement('div');
+                card.className = 'artwork-card';
+                card.innerHTML = `
+                    <div class="artwork-image" style="background-image: url('${artwork.image}'); background-size: cover;">
+                        <img src="${artwork.image}" alt="${artwork.title}" style="width: 100%; height: 100%; object-fit: cover;">
+                        <div class="artwork-overlay">
+                            <div class="overlay-buttons">
+                                <button class="overlay-btn view-btn" data-id="${artwork.id}">👁️</button>
+                                <button class="overlay-btn favorite-btn ${favorites.includes(artwork.id) ? 'active' : ''}" data-id="${artwork.id}">❤️</button>
+                                <button class="overlay-btn cart-btn" data-id="${artwork.id}">🛒</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="artwork-info">
+                        <h3 class="artwork-title">${artwork.title}</h3>
+                        <p class="artwork-artist">${artwork.artist}</p>
+                        <div class="artwork-meta">
+                            <span class="artwork-medium">${artwork.medium}</span>
+                            <span class="artwork-price">$${artwork.price.toLocaleString()}</span>
+                        </div>
+                    </div>
+                `;
+
+                card.querySelector('.view-btn').addEventListener('click', () => openArtModal(artwork));
+                card.querySelector('.favorite-btn').addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    toggleFavoriteArtwork(artwork.id, e.target.closest('button'));
+                });
+                card.querySelector('.cart-btn').addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    addArtworkToCart(artwork);
+                });
+
+                grid.appendChild(card);
+            });
+        }
+
+        // Render Artists
+        function renderArtists() {
+            const grid = document.getElementById('artists-grid');
+
+            grid.innerHTML = artists.map(artist => `
+                <div class="artist-card">
+                    <img src="${artist.image}" alt="${artist.name}" class="artist-image">
+                    <div class="artist-info">
+                        <h3 class="artist-name">${artist.name}</h3>
+                        <p class="artist-specialty">${artist.specialty}</p>
+                        <p class="artist-description">${artist.description}</p>
+                        <div class="artist-social">
+                            <a href="#" title="Instagram">📷</a>
+                            <a href="#" title="Facebook">f</a>
+                            <a href="#" title="Twitter">𝕏</a>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Apply Filters
+        function applyFilters() {
+            const category = document.getElementById('category-filter').value;
+            const sort = document.getElementById('sort-filter').value;
+
+            let filtered = artworks.filter(a => !category || a.category === category);
+
+            switch(sort) {
+                case 'price-low':
+                    filtered.sort((a, b) => a.price - b.price);
+                    break;
+                case 'price-high':
+                    filtered.sort((a, b) => b.price - a.price);
+                    break;
+                case 'popular':
+                    filtered.sort((a, b) => b.popularity - a.popularity);
+                    break;
+                default:
+                    filtered.reverse();
+            }
+
+            renderArtworks(filtered);
+        }
+
+        // Art Modal
+        function openArtModal(artwork) {
+            currentArtwork = artwork;
+            document.getElementById('detail-image').src = artwork.image;
+            document.getElementById('detail-title').textContent = artwork.title;
+            document.getElementById('detail-artist').textContent = artwork.artist;
+            document.getElementById('detail-year').textContent = artwork.year;
+            document.getElementById('detail-medium').textContent = artwork.medium;
+            document.getElementById('detail-dimensions').textContent = artwork.dimensions;
+            document.getElementById('detail-price').textContent = `$${artwork.price.toLocaleString()}`;
+            document.getElementById('detail-description').textContent = artwork.description;
+            document.getElementById('add-to-favorites-btn').classList.toggle('active', favorites.includes(artwork.id));
+            
+            document.getElementById('art-modal').classList.add('active');
+        }
+
+        // Add to Cart
+        function addToCart() {
+            if (!currentArtwork) return;
+            
+            const option = document.querySelector('input[name="art-option"]:checked').value;
+            addArtworkToCart(currentArtwork, option);
+            document.getElementById('art-modal').classList.remove('active');
+        }
+
+        function addArtworkToCart(artwork, option = 'original') {
+            const existingItem = cart.find(item => item.id === artwork.id && item.option === option);
+
+            if (existingItem) {
+                existingItem.quantity += 1;
+            } else {
+                cart.push({
+                    ...artwork,
+                    quantity: 1,
+                    option: option,
+                    cartId: Date.now()
+                });
+            }
+
+            saveToLocalStorage();
+            updateBadges();
+            showNotification(`${artwork.title} added to cart!`);
+        }
+
+        // Open Cart Modal
+        function openCartModal() {
+            const modal = document.getElementById('cart-modal');
+            const itemsContainer = document.getElementById('cart-items');
+
+            if (cart.length === 0) {
+                itemsContainer.innerHTML = '<div class="cart-empty">Your cart is empty. Explore our gallery!</div>';
+            } else {
+                itemsContainer.innerHTML = cart.map(item => `
+                    <div class="cart-item">
+                        <img src="${item.image}" alt="${item.title}" class="cart-item-image">
+                        <div class="cart-item-info">
+                            <div class="cart-item-name">${item.title}</div>
+                            <div class="cart-item-details">Artist: ${item.artist}</div>
+                            <div class="cart-item-details">Type: ${capitalizeOption(item.option)}</div>
+                            <div class="cart-item-price">$${(item.price * item.quantity).toLocaleString()}</div>
+                        </div>
+                        <button class="cart-item-remove" data-cart-id="${item.cartId}">✕</button>
+                    </div>
+                `).join('');
+
+                document.querySelectorAll('.cart-item-remove').forEach(btn => {
+                    btn.addEventListener('click', (e) => {
+                        const cartId = parseInt(e.target.dataset.cartId);
+                        cart = cart.filter(item => item.cartId !== cartId);
+                        saveToLocalStorage();
+                        updateBadges();
+                        openCartModal();
+                    });
+                });
+            }
+
+            updateCartSummary();
+            modal.classList.add('active');
+        }
+
+        // Update Cart Summary
+        function updateCartSummary() {
+            const subtotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+            const shipping = subtotal > 0 ? (subtotal > 100 ? 0 : 25) : 0;
+            const total = subtotal + shipping;
+
+            document.getElementById('subtotal').textContent = `$${subtotal.toLocaleString()}`;
+            document.getElementById('shipping').textContent = shipping === 0 ? 'FREE' : `$${shipping.toLocaleString()}`;
+            document.getElementById('total').textContent = `$${total.toLocaleString()}`;
+        }
+
+        // Favorites
+        function toggleFavoriteArtwork(artworkId, btn) {
+            if (favorites.includes(artworkId)) {
+                favorites = favorites.filter(id => id !== artworkId);
+                btn?.classList.remove('active');
+            } else {
+                favorites.push(artworkId);
+                btn?.classList.add('active');
+            }
+            saveToLocalStorage();
+            updateBadges();
+        }
+
+        function toggleFavorite() {
+            if (!currentArtwork) return;
+            toggleFavoriteArtwork(currentArtwork.id, document.getElementById('add-to-favorites-btn'));
+        }
+
+        // Update Badges
+        function updateBadges() {
+            const badgeElements = document.querySelectorAll('.badge');
+            if (badgeElements[0]) badgeElements[0].textContent = favorites.length;
+            if (badgeElements[1]) badgeElements[1].textContent = cart.length;
+        }
+
+        // Local Storage
+        function saveToLocalStorage() {
+            localStorage.setItem('art-cart', JSON.stringify(cart));
+            localStorage.setItem('art-favorites', JSON.stringify(favorites));
+        }
+
+        function loadFromLocalStorage() {
+            const savedCart = localStorage.getItem('art-cart');
+            const savedFavorites = localStorage.getItem('art-favorites');
+
+            if (savedCart) cart = JSON.parse(savedCart);
+            if (savedFavorites) favorites = JSON.parse(savedFavorites);
+        }
+
+        // Utilities
+        function capitalizeOption(option) {
+            return option.charAt(0).toUpperCase() + option.slice(1);
+        }
+
+        function showNotification(message) {
+            const notification = document.createElement('div');
+            notification.style.cssText = `
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                background: linear-gradient(135deg, #c7306b, #d4427d);
+                color: white;
+                padding: 16px 24px;
+                border-radius: 8px;
+                z-index: 2000;
+                animation: slideInRight 0.3s;
+                box-shadow: 0 4px 15px rgba(199, 48, 107, 0.3);
+            `;
+            notification.textContent = message;
+            document.body.appendChild(notification);
+
+            setTimeout(() => notification.remove(), 3000);
+        }
+        const cards = document.querySelectorAll('.art-card');
+
+const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            entry.target.style.opacity = "1";
+            entry.target.style.transform = "translateY(0)";
+        }
+    });
+});
+
+cards.forEach(card => {
+    card.style.opacity = "0";
+    card.style.transform = "translateY(30px)";
+    card.style.transition = "all 0.6s ease";
+    observer.observe(card);
+});
+    </script>
+</body>
+</html>
