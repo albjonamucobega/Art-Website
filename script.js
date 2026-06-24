@@ -213,21 +213,21 @@
                 id: 1,
                 name: "Sarah Mitchell",
                 specialty: "Oil Paintings",
-                image: "images/sarah mitchell.jpg",
+                image: "images/sara mitchell.jpg",
                 description: "Award-winning oil painter specializing in landscapes and natural light."
             },
             {
                 id: 2,
                 name: "James Chen",
                 specialty: "Watercolor Art",
-                image: "images/james chen.png",
+                image: "images/james chen.jpg",
                 description: "Contemporary watercolor artist creating serene and expressive works."
             },
             {
                 id: 3,
                 name: "Elena Rodriguez",
                 specialty: "Sketches & Drawings",
-                image: "images/elena rodrigez.jpg",
+                image: "images/elena rodrigez.png",
                 description: "Master draughtsman known for detailed architectural and figure studies."
             },
             {
